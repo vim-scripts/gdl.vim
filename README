@@ -1,0 +1,15 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=706
+
+gdl.vim is a syntax highlighting package for the graph description language GDL (fka VCG).
+
+Whenever you open a .gdl or .vcg file, the package automatically analyzes the text and marks keywords, attribute specifications, comments, etc. using customizable colors. Whenever you start writing a new GDL document, it automatically analyzes the new text for the proper spelling/syntax, highlighting correct items.
+
+Benefit to you: your GDL file is easier to read and you can understand GDL source code faster.
+
+gdl.vim is intended to go beyond simple syntax and spell-checking. It should also check attribute-value pairs for type correctness. In some cases, it will even check if a specified number is within the valid range.
+
+The package was tested under Vim 5.6/Linux, gVim 6.1/WinNT4.0, gVim 6.2/Win2000, and gVim6.3/Win2000.
+
+For further information, screenshots, etc., visit http://www.aiSee.com/gdledit
+
+Your feedback is appreciated.
