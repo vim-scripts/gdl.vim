@@ -37,7 +37,7 @@
 :sy match gdlVar /\(foldnode\.\|node\.\)info[123] *:/he=e-1 skipwhite skipempty nextgroup=gdlString
 :sy match gdlVar /\(foldnode\.\|node\.\)\(level\|vertical_\=order\) *:/he=e-1 skipwhite skipempty nextgroup=gdlEInt
 :sy match gdlVar /\(foldnode\.\|node\.\|foldedge\.\|edge\.\)horizontal_\=order *:/he=e-1 skipwhite skipempty nextgroup=gdlEInt
-:sy match gdlVar /\(foldnode\.\|node\.\)\(height\|width\|borderwidth\|margin\|stretch\|shrink\) *:/he=e-1 skipwhite skipempty nextgroup=gdlEInt
+:sy match gdlVar /\(foldnode\.\|node\.\)\(height\|width\|borderwidth\|stretch\|shrink\) *:/he=e-1 skipwhite skipempty nextgroup=gdlEInt
 :sy match gdlVar /\(foldedge\.\|edge\.\)\(arrowsize\|backarrowsize\|thickness\|priority\) *:/he=e-1 skipwhite skipempty nextgroup=gdlEInt
 :sy match gdlOpt "scaling *:" skipwhite skipempty nextgroup=gdlScale,gdlEFloat
 :sy match gdlVar /\(foldnode\.\|node\.\)scaling *:/he=e-1 skipwhite skipempty nextgroup=gdlEFloat
