@@ -88,7 +88,7 @@
 :sy match gdlOpt "\(c\|p\|r\)\(min\) *:" skipwhite skipempty nextgroup=gdlEInt
 :sy region gdlEColor start=/\S/ end=/\(\n\| \|}\)/he=e-1 contains=gdlColor contained
 :sy region gdlERGB start=/\S/ end=/\(\n\| \|}\)/he=e-1 contains=gdlRGB contained
-:sy match gdlEArrow /\(\a\| \)*/ contains=gdlArrow nextgroup=gdlRQuote contained
+:sy match gdlEArrow /\(\a\| \)*/ contains=gdlArrow nextgroup=gdlPlus,gdlRQuote contained
 :sy region gdlEShape start=/\S/ end=/\(\n\| \|}\)/he=e-1 contains=gdlShape contained
 :sy region gdlEState start=/\S/ end=/\(\n\| \|}\)/he=e-1 contains=gdlState contained
 :sy region gdlEAlg start=/\S/ end=/\(\n\| \|}\)/he=e-1 contains=gdlAlg contained
@@ -111,7 +111,8 @@
 :sy keyword gdlAlg normal tree forcedir dfs minbackward contained
 :sy keyword gdlAlg maxdepth maxdepthslow maxindegree maxoutdegree maxdegree contained
 :sy keyword gdlAlg mindepth mindepthslow minindegree minoutdegree mindegree contained
-:sy match gdlArrow /\(none\|solid\|line\|filled\|half\|circle\|rhomb\|box\|diamond\|slash\|dslash\| \|_\)/ contained
+:sy match gdlArrow /\(none\|solid\|line\|filled\|half\|circle\|rhomb\|box\|diamond\|slash\|dslash\| \)/ contained
+:sy match gdlPlus /+/ nextgroup=gdlEArrow contained
 :sy keyword gdlOldArrow none solid line contained
 :sy keyword gdlLine solid continuous dashed dotted double triple invisible contained
 :sy keyword gdlOrient toptobottom bottomtotop lefttoright righttoleft contained
@@ -179,6 +180,7 @@
 :hi link gdlVar Identifier
 :hi link gdlTitle Identifier
 :hi link gdlArrow Type
+:hi link gdlPlus Type
 :hi link gdlOldArrow Type
 :hi link gdlAlg Type
 :hi link gdlAlign Type
