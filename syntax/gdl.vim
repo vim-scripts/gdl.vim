@@ -6,15 +6,18 @@
 :hi link gdlComment Comment
 :sy case match
 :sy match gdlKey /\(graph\|edge\|node\|region\|backedge\|\(left\|right\|\)\(bent\|\)nearedge\):\s*{/he=e-1
-:sy match gdlErr /\(foldnode\.\|node\.\|foldedge\.\|edge\.\)\a*/
-:sy match gdlOpt "\(text\|border\|\)color *:" skipwhite skipempty nextgroup=gdlEColor
+:sy match gdlErr /\(foldnode\.\|foldedge\.\)\a*/hs=s+9
+:sy match gdlErr /\(node\.\|edge\.\)\a*/hs=s+5
+:sy match gdlOpt "\(text\|border\)color *:" skipwhite skipempty nextgroup=gdlEColor
 :sy match gdlOpt "\(arrow\|backarrow\|\)color *:" skipwhite skipempty nextgroup=gdlEColor
-:sy match gdlOpt "\(arrow\|backarrow\|\)style *:" skipwhite skipempty nextgroup=gdlEStyle
+:sy match gdlOpt "\(arrow\|backarrow\|\)style *:" skipwhite skipempty nextgroup=gdlOldArrow,gdlALQuote
 :sy match gdlOpt "\(line\|border\)style *:" skipwhite skipempty nextgroup=gdlELine
 :sy match gdlOpt "shape *:" skipwhite skipempty nextgroup=gdlEShape
-:sy match gdlVar /\(foldnode\.\|node\.\)\(text\|border\|\)color *:/he=e-1 skipwhite skipempty nextgroup=gdlEColor
-:sy match gdlVar /\(foldedge\.\|edge\.\)\(arrow\|backarrow\|\)color *:/he=e-1 skipwhite skipempty nextgroup=gdlEColor
-:sy match gdlVar /\(foldedge\.\|edge\.\)\(arrow\|backarrow\|\)style *:/he=e-1 skipwhite skipempty nextgroup=gdlEStyle
+:sy match gdlOpt "color *:" skipwhite skipempty nextgroup=gdlEColor
+:sy match gdlVar /\(foldnode\.\|node\.\)color *:/he=e-1 skipwhite skipempty nextgroup=gdlEColor
+:sy match gdlVar /\(foldnode\.\|node\.\)\(textcolor\|bordercolor\|color\) *:/he=e-1 skipwhite skipempty nextgroup=gdlEColor
+:sy match gdlVar /\(foldedge\.\|edge\.\)\(arrowcolor\|backarrowcolor\|color\) *:/he=e-1 skipwhite skipempty nextgroup=gdlEColor
+:sy match gdlVar /\(foldedge\.\|edge\.\)\(arrow\|backarrow\|\)style *:/he=e-1 skipwhite skipempty nextgroup=gdlOldArrow,gdlALQuote
 :sy match gdlVar /\(foldedge\.\|edge\.\)linestyle *:/he=e-1 skipwhite skipempty nextgroup=gdlELine
 :sy match gdlVar /\(foldnode\.\|node\.\)borderstyle *:/he=e-1 skipwhite skipempty nextgroup=gdlELine
 :sy match gdlVar /\(foldnode\.\|node\.\)shape *:/he=e-1 skipwhite skipempty nextgroup=gdlEShape
@@ -37,7 +40,7 @@
 :sy match gdlVar /\(foldnode\.\|node\.\)info[123] *:/he=e-1 skipwhite skipempty nextgroup=gdlString
 :sy match gdlVar /\(foldnode\.\|node\.\)\(level\|vertical_\=order\) *:/he=e-1 skipwhite skipempty nextgroup=gdlEInt
 :sy match gdlVar /\(foldnode\.\|node\.\|foldedge\.\|edge\.\)horizontal_\=order *:/he=e-1 skipwhite skipempty nextgroup=gdlEInt
-:sy match gdlVar /\(foldnode\.\|node\.\)\(height\|width\|borderwidth\|stretch\|shrink\) *:/he=e-1 skipwhite skipempty nextgroup=gdlEInt
+:sy match gdlVar /\(foldnode\.\|node\.\)\(height\|width\|borderwidth\|margin\|stretch\|shrink\) *:/he=e-1 skipwhite skipempty nextgroup=gdlEInt
 :sy match gdlVar /\(foldedge\.\|edge\.\)\(arrowsize\|backarrowsize\|thickness\|priority\) *:/he=e-1 skipwhite skipempty nextgroup=gdlEInt
 :sy match gdlOpt "scaling *:" skipwhite skipempty nextgroup=gdlScale,gdlEFloat
 :sy match gdlVar /\(foldnode\.\|node\.\)scaling *:/he=e-1 skipwhite skipempty nextgroup=gdlEFloat
@@ -83,10 +86,10 @@
 :sy match gdlOpt "\(yspace\|ybase\|ymax\|yraster\|y\) *:" skipwhite skipempty nextgroup=gdlEInt
 :sy match gdlOpt "\(a\|b\|c\|fd\|p\|r\|s\)\(max\) *:" skipwhite skipempty nextgroup=gdlEInt
 :sy match gdlOpt "\(c\|p\|r\)\(min\) *:" skipwhite skipempty nextgroup=gdlEInt
-:sy region gdlEColor start=/\S/ end=/\( \|\n\|}\)/he=e-1 contains=gdlColor contained
+:sy region gdlEColor start=/\S/ end=/\(\n\| \|}\)/he=e-1 contains=gdlColor contained
 :sy region gdlERGB start=/\S/ end=/\(\n\| \|}\)/he=e-1 contains=gdlRGB contained
+:sy match gdlEArrow /\(\a\| \)*/ contains=gdlArrow nextgroup=gdlRQuote contained
 :sy region gdlEShape start=/\S/ end=/\(\n\| \|}\)/he=e-1 contains=gdlShape contained
-:sy region gdlEStyle start=/\S/ end=/\(\n\| \|}\)/he=e-1 contains=gdlStyle contained
 :sy region gdlEState start=/\S/ end=/\(\n\| \|}\)/he=e-1 contains=gdlState contained
 :sy region gdlEAlg start=/\S/ end=/\(\n\| \|}\)/he=e-1 contains=gdlAlg contained
 :sy region gdlELine start=/\S/ end=/\(\n\| \|}\)/he=e-1 contains=gdlLine contained
@@ -105,9 +108,11 @@
 :sy keyword gdlShape uptrapeze trapezoid uptrapezoid lparallelogram rparallelogram contained
 :sy keyword gdlStyle solid line none contained
 :sy keyword gdlState unfolded folded boxed clustered wrapped exclusive white contained
-:sy keyword gdlAlg normal tree forcedir dfs contained
+:sy keyword gdlAlg normal tree forcedir dfs minbackward contained
 :sy keyword gdlAlg maxdepth maxdepthslow maxindegree maxoutdegree maxdegree contained
 :sy keyword gdlAlg mindepth mindepthslow minindegree minoutdegree mindegree contained
+:sy match gdlArrow /\(none\|solid\|line\|filled\|half\|circle\|rhomb\|box\|diamond\|slash\|dslash\| \|_\)/ contained
+:sy keyword gdlOldArrow none solid line contained
 :sy keyword gdlLine solid continuous dashed dotted double triple invisible contained
 :sy keyword gdlOrient toptobottom bottomtotop lefttoright righttoleft contained
 :sy keyword gdlOrient top_to_bottom bottom_to_top left_to_right right_to_left contained
@@ -129,13 +134,14 @@
 :sy match gdlChar "\\\(n\|t\|b\|a\)" contained
 :sy match gdlChar "\\fi\(0\|1\|2\)\d\d" contained
 :sy match gdlChar "\\f\(u\|I\|b\|B\|n\|\d\d\)" contained
-:sy match gdlHref "href:" contained
+:sy match gdlHref /\(href:\|target:\|onClick:\|onMouseOut:\|onMouseOver:\|onMouseDown:\|onMouseUp:\|onMouseMove\)/ contained
 :sy match gdlSlash "\(\\\|\/\)" contained
 :sy match gdlLQuote /"/ nextgroup=gdlEFName contained
 :sy match gdlEFName /\a*/ contains=gdlFName nextgroup=gdlEFSize contained
 :sy match gdlFName "\(\(tim\|ncen\)\(R\|BI\|I\|B\)\|\(cour\|helv\)\(R\|BO\|O\|B\)\|symb\)" nextgroup=gdlEFSize contained
 :sy match gdlEFSize /\d*/ contains=gdlFSize nextgroup=gdlRQuote contained
 :sy match gdlFSize "\(08\|10\|12\|14\|18\|24\)" nextgroup=gdlRQuote contained
+:sy match gdlALQuote /"/ nextgroup=gdlEArrow contained
 :sy match gdlRQuote /"/ contained
 :sy match gdlFish /\(f\|d\|\)\(p\|c\)fish/ contained
 :sy keyword gdlBool yes no contained
@@ -143,6 +149,7 @@
 :hi link gdlErr Error
 :hi link gdlEAlg Error
 :hi link gdlEAlign Error
+:hi link gdlEArrow Error
 :hi link gdlEBool Error
 :hi link gdlEColor Error
 :hi link gdlEFloat Error
@@ -155,7 +162,6 @@
 :hi link gdlERGB Error
 :hi link gdlEShape Error
 :hi link gdlEState Error
-:hi link gdlEStyle Error
 :hi link gdlString String
 :hi link gdlInfo String
 :hi link gdlPath String
@@ -172,9 +178,13 @@
 :hi link gdlIdNr Identifier
 :hi link gdlVar Identifier
 :hi link gdlTitle Identifier
+:hi link gdlArrow Type
+:hi link gdlOldArrow Type
 :hi link gdlAlg Type
 :hi link gdlAlign Type
 :hi link gdlAMode Type
+:hi link gdlALQuote Type
+:hi link gdlARQuote Type
 :hi link gdlFish Type
 :hi link gdlFName Type
 :hi link gdlFSize Type
